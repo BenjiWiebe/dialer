@@ -1,0 +1,31 @@
+Hacking together an auto-dialer
+*******************************
+
+I've been hacking (the creative kind) in all my spare time for the last 24 hours, and the results are in...
+
+
+You know how Google is, right? When your search is for something simple like a phone number, it shows the phone number in a big box, no following links required.
+Now I can Google for "1&1 tech support phone number" (for instance), and when the results pop up, the phone number is a link! And when I pick up the phone off the hook, and click the link, the number is dialed for me.
+
+And when I go to some random website and click Contact Us, the phone number is clickable..and you guessed it, when I click it, it auto-dials as well.
+
+Or searching people on WhitePages. Or (almost) anywhere else on the Internet that you see phone numbers.
+
+
+How it works:
+
+	I have a GreaseMonkey script written up that somewhat intelligently looks for phone numbers in a web page (and for Google, it watches the Instant results as well) and converts them to a tel: link, which is the most official tele
+phone number link-protocol I know of. Anyways, on a desktop computer, usually a tel: link doesn't do anything. Usually, it takes a smartphone to be able to click-to-call.
+	Next, I set the tel: link handler for my browser to a little program that sends the telephone number to a networked computer, which happens to sit physically close to the telephone bridge box, where all the telephone lines in ou
+r house are attached to the phone companies' line. I had to attach another phone line to the bridge (and without a punch-down tool, ugh!) because the only jack right there was filtered for DSL-only, no voice frequencies.
+	With that done, all that remained was having the computer somehow dial the number into the phone line. I didn't feel very comfortable building my own circuit for that--though I wanted to--because phone lines have complicated ele
+ctrical requirements, somewhat high voltages (28-120V), and federal protection. Any device attached to a Public Switched Telephone Network (PSTN) has to be Part 68 certified by the F.C.C., or else you can be hauled in (or something!) fo
+r domestic terrorism. Happily, we have an old and hopefully Part 68-compliant USB fax modem that no longer works for faxing but can still dial numbers.         The iffy part here was that most cheap modems are soft modems (i.e. the comp
+uter does the encoding/decoding) and are only compatible with Windows. However, this modem is supported by Linux (so it probably isn't a soft modem) and shows up as a serial TTY device that understands the standard Hayes command set (AT
+ command set), such as ATDT<number>, ATH0, etc.
+	Next step was to whip up a little Ruby server that takes off the area code for local calls, makes sure that only one number can be dialed at a time, feeds the AT commands into the modem, etc. I had to have it send ATDT<number>,
+sleep for 6 seconds, and then send ATH0 (hang-up) so it wouldn't squeal at whoever answered the phone, as modems are wont to do.
+	And that's it! Works like a charm!
+
+
+Code is available at GitHub.com/BenjiWiebe/dialer.
