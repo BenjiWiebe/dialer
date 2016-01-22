@@ -2,7 +2,7 @@
 require 'socket'
 
 MODEM = "/dev/ttyACM0"
-area="732"
+exchange="732"
 
 thread = Thread.new {}
 server = TCPServer.new 2893
@@ -23,7 +23,7 @@ loop do
 			puts "#{number} is not a valid phone number."
 			Thread.exit
 		end
-		if number[-7..-5] == area
+		if number[-7..-5] == exchange
 			puts "Local call"
 			number=number[-7..-1]
 		end
