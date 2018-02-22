@@ -1,7 +1,11 @@
 //This program handles the tel: link for Firefox
 //It gets the tel: link passed as its first argument.
 
-#define HOSTNAME "server.lan"
+//Uncomment the below line and put in the hostname or IP address of the machine running dialer_server.rb
+//#define HOSTNAME "servernamehere"
+#ifndef HOSTNAME
+#  error "Please define HOSTNAME"
+#endif
 #define PORTNO	2893
 #define _PORTNO	"2893"
 
