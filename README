@@ -7,13 +7,14 @@ Some Windows/Linux computers to make use of the dialer!
 
 Installation instructions:
 1) Install the GreaseMonkey script, PhoneLink.user.js.
+2) Edit dialer.c and put in the hostname or IP of the server in the #define HOSTNAME line near the top of the file, and uncomment it.
 2) Compile the dialer.c file: gcc dialer.c -o dialer for Linux. For Windows: gcc -mwindows dialer.c -o dialer.exe -lws2_32
 3 Have your browser use it to handle tel: links.
 	For Firefox (I'm not sure about other browsers, Google is your friend!):
 	a) Go to about:config, and create a new Boolean named "network.protocol-handler.expose.tel" and set the value to false.
 	b) Go click a tel: link and choose dialer.exe as the program to use to open tel: links.
 4) Copy dial_server.rb on some Linux host (or Raspberry Pi) that has Ruby installed that is near your phone line.
-5) Connect the modem to the server, and plug in the modem.
+5) Connect the modem to the server, and plug in the modem to the phone line.
 6) Check that the modem created a /dev/ttyACM* entry, most likely /dev/ttyACM0. If it is different, you will need to edit dial_server.rb and put the correct string in place.
 7) Put in your phone exchange (the first three digits of a local seven digit number) in dial_server.rb, so it can remove the area code for local calls.
 8) Start dial_server.rb (via cron, startup scripts, whatever you want!) and make sure its user is a member of 'dialout', so it can access /dev/ttyACM*.
